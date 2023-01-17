@@ -1,16 +1,17 @@
+import pickle
+import random
+from os.path import abspath, dirname
+from pathlib import Path
+from typing import List
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import random
-import pickle
-from pathlib import Path
 from numpy.typing import NDArray
-from typing import List
-from os.path import dirname, abspath
-
 from sklearn.preprocessing import MinMaxScaler
-import matplotlib.pyplot as plt
 
 stats = "YR GP GS MIN FGM FGA FGP 3PM 3PA 3PP FTM FTA FTP OFF DEF TREB AST STL BLK PF TOV PTS GP GS DBLDBL TPLDBL 40P 20P 20AS Techs HOB AST_TO STL_TO FT_FGA W L WP OWS DWS WS GP GS TSP EFGP ORBP DRBP TRBP ASTP TOVP STLP BLKP USGP TOTSP PPR PPS ORtg DRtg PER"
+
 
 def multi_team_player_avg(l: List) -> NDArray:
     """
@@ -33,28 +34,27 @@ def multi_team_player_avg(l: List) -> NDArray:
 
     num_teams = len(l_other) // 57
 
-
-    totals = np.array(l[1:21 * num_teams + 1]).reshape(num_teams, 21)
-    misc = np.array(l[21 * num_teams + 1: 21*num_teams + 18* num_teams + 1]).reshape(num_teams, 18)
-    advanced = np.array(l[21*num_teams + 18* num_teams + 1:]).reshape(num_teams, -1)
-
+    totals = np.array(l[1 : 21 * num_teams + 1]).reshape(num_teams, 21)
+    misc = np.array(
+        l[21 * num_teams + 1 : 21 * num_teams + 18 * num_teams + 1]
+    ).reshape(num_teams, 18)
+    advanced = np.array(l[21 * num_teams + 18 * num_teams + 1 :]).reshape(num_teams, -1)
 
     rv = np.array(l_yr)
     for stats in [totals, misc, advanced]:
-        stats = np.mean(stats, axis = 0)
+        stats = np.mean(stats, axis=0)
         rv = np.hstack((rv, stats))
     return rv
 
 
-def transform_to_array(info : List) -> NDArray:
-    '''Transforms the scraped data, in list format, into an array '''
+def transform_to_array(info: List) -> NDArray:
+    """Transforms the scraped data, in list format, into an array"""
 
     v_0 = info[0]
     if len(v_0) != 58:
         rv = multi_team_player_avg(v_0)
     else:
         rv = np.array(info[0])
-
 
     for i in range(1, len(info)):
         v = info[i]
@@ -74,7 +74,7 @@ if __name__ == "__main__":
     # Load in the data
     #
     #################################################################################
-    data_directory = Path(dirname(dirname(abspath(__file__)))).joinpath('scraping')
+    data_directory = Path(dirname(dirname(abspath(__file__)))).joinpath("scraping")
 
     all_names = []
     all_stats = []
@@ -93,11 +93,10 @@ if __name__ == "__main__":
         all_names.append(names)
         all_stats.append(numeric)
 
-
     all_names = np.hstack((all_names))
     all_stats = np.vstack((all_stats))
 
-    df = pd.DataFrame(all_stats, columns=stats.split(' '))
+    df = pd.DataFrame(all_stats, columns=stats.split(" "))
     df.insert(0, "PLAYER", all_names)
 
     #################################################################################
@@ -108,11 +107,16 @@ if __name__ == "__main__":
 
     df_named = df[df.PLAYER != ""]
 
-    career_len = df_named.groupby(["PLAYER"]).agg({'YR': len}).rename(columns={"YR": "career_len"})
-    start_yr = df_named.groupby(["PLAYER"]).agg({'YR': min}).rename(columns={"YR": "start_yr"})
+    career_len = (
+        df_named.groupby(["PLAYER"])
+        .agg({"YR": len})
+        .rename(columns={"YR": "career_len"})
+    )
+    start_yr = (
+        df_named.groupby(["PLAYER"]).agg({"YR": min}).rename(columns={"YR": "start_yr"})
+    )
     career = career_len.join(start_yr)
     career["PLAYER"] = career.index
     career = career.reset_index(drop=True)
 
     df_named = df_named.merge(career, on="PLAYER", how="left")
-
