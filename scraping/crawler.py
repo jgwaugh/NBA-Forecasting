@@ -7,7 +7,7 @@ import sys
 import time
 import urllib.request
 import warnings
-from typing import Iterable, List
+from typing import Iterable, List, Set, Tuple
 
 import bs4
 import numpy as np
@@ -76,3 +76,98 @@ def list_to_queue(list_: List) -> queue.Queue:
     for term in list_:
         q.put(term)
     return q
+
+
+def get_next_link(set_ : Set, queue: queue.Queue) -> Tuple:
+    """
+    Check if the link has already been in the queue.
+
+    Parameters
+    ----------
+    set_ : Set
+        Visited links
+    queue : Queue
+        Links to visit
+
+    Returns
+    -------
+    Tuple
+        queue is the updated queue, next_in_queue is the
+        next link(if it exists), and a boolean indicating whether or not
+        a next link can be returned
+
+
+    """
+    if queue.empty():
+        return queue, None, False
+    else:
+
+        next_in_queue = queue.get()
+        while next_in_queue in set_:
+            if not queue.empty():
+                next_in_queue = queue.get()
+            else:
+                return queue, None, False
+    return queue, next_in_queue, True
+
+
+def crawl(num_pages_to_crawl: int,
+          starting_url: str,
+          limiting_domain: str,
+          yr: int) -> List:
+    """
+    Crawls the website for NBA player data
+
+    Parameters
+    ----------
+    num_pages_to_crawl :  int
+        Maximum number of pages to crawl
+    starting_url : str
+        URL to start crawling
+    limiting_domain : str
+        Limiting domain for web crawling (crawler won't go outside of this domain)
+    yr : int
+        Year of data to scrape
+
+    Returns
+    -------
+    List of player data from that year
+
+    """
+
+    steps = 0
+
+    proper_url, soup = make_soup(starting_url, limiting_domain, start=True)
+    starting_links = generate_links(soup, proper_url, limiting_domain)
+
+
+    print("found start links")
+
+    visited = {starting_url}
+    q = list_to_queue(starting_links)
+
+    new_queue, next_link, indicator = get_next_link(visited, q)
+    q = new_queue
+
+    mydata = []
+
+    while (steps <= num_pages_to_crawl and indicator):
+        visited.add(next_link)
+        new_proper_url, rv = make_soup(next_link, limiting_domain)
+        if rv != []:
+            _= generate_links(rv, new_proper_url, limiting_domain)
+            player_info = soup_to_array(rv, yr)
+            if player_info:
+                mydata += player_info
+
+        steps += 1
+        new_queue, next_link, indicator = get_next_link(visited, q)
+
+        q = new_queue
+
+    print("steps: ", steps)
+    return mydata
+
+
+
+
