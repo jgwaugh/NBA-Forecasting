@@ -1,18 +1,16 @@
-import csv
-import json
-import os
 import queue
 import re
-import sys
-import time
-import urllib.request
-import warnings
 from typing import Iterable, List, Set, Tuple
 
 import bs4
 import numpy as np
 import utility as util
 from paths import bad_link, limiting_domain, limiting_path, starting_url
+
+import warnings
+from tqdm import tqdm
+
+warnings.filterwarnings("ignore")
 
 
 def check_year(yr: str) -> bool:
@@ -136,6 +134,7 @@ def crawl(
 
     steps = 0
 
+    #import ipdb; ipdb.set_trace()
     proper_url, soup = make_soup(starting_url, limiting_domain, start=True)
     starting_links = generate_links(soup, proper_url, limiting_domain)
 
@@ -156,6 +155,8 @@ def crawl(
             _ = generate_links(rv, new_proper_url, limiting_domain)
             player_info = soup_to_array(rv, yr)
             if player_info:
+                #name = player_info[0][1]
+                #print(name)
                 mydata += player_info
 
         steps += 1
@@ -249,3 +250,21 @@ def season_to_arrays(season: Iterable, save_name: str):
 
     np.save(save_name + "_names", names)
     np.save(save_name + "_numeric", numeric)
+
+if __name__ == "__main__":
+    starting_url = "https://basketball.realgm.com/nba/players/"
+    limiting_path = '/player/'
+
+    start_yr = 1987
+    end_yr = 2023
+
+    all_data = []
+    for yr in tqdm(range(start_yr, end_yr)):
+        try:
+            print(yr)
+            sub_start = starting_url + str(yr)
+            players_yr = crawl(1000000, sub_start, limiting_domain, yr)
+            season_to_arrays(players_yr, str(yr))
+            del players_yr
+        except:
+            pass
