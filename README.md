@@ -26,7 +26,8 @@ You can build the environment using
 conda create -n nba_forecasting python=3.7.15
 ```
 
-Requirements are stored in `requirements.txt`.
+Requirements are stored in `requirements.txt` 
+and can be installed with `pip install -r requirements.txt`. 
 
 
 ## Code
