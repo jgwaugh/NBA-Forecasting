@@ -25,9 +25,9 @@ def check_year(yr: str) -> bool:
         return False
 
 
-def generate_links(soup: bs4.BeautifulSoup,
-                   proper_url: str,
-                   limiting_domain: str) -> Iterable[str]:
+def generate_links(
+    soup: bs4.BeautifulSoup, proper_url: str, limiting_domain: str
+) -> Iterable[str]:
     """
     Takes a url as input. Returns the urls of all of the pages linked
     to the initial page in list format. Note that for the final version
