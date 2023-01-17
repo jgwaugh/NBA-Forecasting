@@ -1,6 +1,8 @@
+from typing import List, Tuple
+
 import numpy as np
 from numpy.typing import NDArray
-from typing import Tuple, List
+
 
 class BatchGenerator(object):
     """
@@ -21,7 +23,7 @@ class BatchGenerator(object):
 
     """
 
-    def __init__(self, data : List[Tuple[str, NDArray]], step_size: int =2):
+    def __init__(self, data: List[Tuple[str, NDArray]], step_size: int = 2):
         """
         Parameters
         ----------
@@ -39,7 +41,7 @@ class BatchGenerator(object):
 
     def generate(self):
         """Yields prediction pairs of the form train =(X_{i-step_size},..., X_{i - 1})
-        and test = X_i """
+        and test = X_i"""
         while True:
             if self.current_idx >= len(self.data):
                 self.current_idx = 0
@@ -58,8 +60,8 @@ class BatchGenerator(object):
             y = np.zeros((batchsize, 1, player.shape[1]))
 
             for i in range(0, batchsize):
-                X[i, :, :] = player[i: i + step_size, :]
-                y[i, :, :] = player[i + step_size: i + 1 + step_size, :]
+                X[i, :, :] = player[i : i + step_size, :]
+                y[i, :, :] = player[i + step_size : i + 1 + step_size, :]
             self.current_idx += 1
 
             yield X, y
