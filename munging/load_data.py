@@ -2,17 +2,18 @@ import pickle
 import random
 from os.path import abspath, dirname
 from pathlib import Path
-from typing import List, Iterable, Tuple
+from typing import Iterable, List, Tuple
 
+import joblib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from numpy.typing import NDArray
 from sklearn.preprocessing import MinMaxScaler
-import joblib
 
 stats = "YR GP GS MIN FGM FGA FGP 3PM 3PA 3PP FTM FTA FTP OFF DEF TREB AST STL BLK PF TOV PTS GP GS DBLDBL TPLDBL 40P 20P 20AS Techs HOB AST_TO STL_TO FT_FGA W L WP OWS DWS WS GP GS TSP EFGP ORBP DRBP TRBP ASTP TOVP STLP BLKP USGP TOTSP PPR PPS ORtg DRtg PER"
 cutoff_year = 1990
+
 
 def multi_team_player_avg(l: List) -> NDArray:
     """
@@ -67,8 +68,9 @@ def transform_to_array(info: List) -> NDArray:
         rv = np.vstack((rv, v))
     return rv
 
+
 def remove_duplicate_stats(columns: Iterable) -> List:
-    """Removes duplicate column names while preserving order """
+    """Removes duplicate column names while preserving order"""
     seen = set()
     rv = []
     for col in columns:
@@ -76,6 +78,7 @@ def remove_duplicate_stats(columns: Iterable) -> List:
             rv.append(col)
             seen.add(col)
     return rv
+
 
 def prepare_data(data: pd.DataFrame) -> List[Tuple[str, NDArray]]:
     """
@@ -97,11 +100,11 @@ def prepare_data(data: pd.DataFrame) -> List[Tuple[str, NDArray]]:
     player_career = []
     for player in players:
         player_data = data[data.PLAYER == player]
-        player_data = player_data.drop(["PLAYER","career_len", "start_yr", "YR"], axis = 1).values
+        player_data = player_data.drop(
+            ["PLAYER", "career_len", "start_yr", "YR"], axis=1
+        ).values
         player_career.append((player, player_data))
     return player_career
-
-
 
 
 if __name__ == "__main__":
@@ -161,7 +164,6 @@ if __name__ == "__main__":
 
     df_transformed = df_named.copy()
 
-
     columns_scale = df_named.columns[2:-2]
     scaler = MinMaxScaler()
     numeric_data = df_named.loc[:, columns_scale]
@@ -169,7 +171,7 @@ if __name__ == "__main__":
 
     df_transformed.loc[:, columns_scale] = scaled
 
-    joblib.dump(scaler, 'scaler')
+    joblib.dump(scaler, "scaler")
     df_named.to_pickle("NBA_stats.pkl")
     df_transformed.to_pickle("NBA_stats_transformed.pkl")
 
