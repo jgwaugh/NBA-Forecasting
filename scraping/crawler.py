@@ -78,7 +78,7 @@ def list_to_queue(list_: List) -> queue.Queue:
     return q
 
 
-def get_next_link(set_ : Set, queue: queue.Queue) -> Tuple:
+def get_next_link(set_: Set, queue: queue.Queue) -> Tuple:
     """
     Check if the link has already been in the queue.
 
@@ -111,10 +111,9 @@ def get_next_link(set_ : Set, queue: queue.Queue) -> Tuple:
     return queue, next_in_queue, True
 
 
-def crawl(num_pages_to_crawl: int,
-          starting_url: str,
-          limiting_domain: str,
-          yr: int) -> List:
+def crawl(
+    num_pages_to_crawl: int, starting_url: str, limiting_domain: str, yr: int
+) -> List:
     """
     Crawls the website for NBA player data
 
@@ -140,7 +139,6 @@ def crawl(num_pages_to_crawl: int,
     proper_url, soup = make_soup(starting_url, limiting_domain, start=True)
     starting_links = generate_links(soup, proper_url, limiting_domain)
 
-
     print("found start links")
 
     visited = {starting_url}
@@ -151,11 +149,11 @@ def crawl(num_pages_to_crawl: int,
 
     mydata = []
 
-    while (steps <= num_pages_to_crawl and indicator):
+    while steps <= num_pages_to_crawl and indicator:
         visited.add(next_link)
         new_proper_url, rv = make_soup(next_link, limiting_domain)
         if rv != []:
-            _= generate_links(rv, new_proper_url, limiting_domain)
+            _ = generate_links(rv, new_proper_url, limiting_domain)
             player_info = soup_to_array(rv, yr)
             if player_info:
                 mydata += player_info
@@ -167,7 +165,3 @@ def crawl(num_pages_to_crawl: int,
 
     print("steps: ", steps)
     return mydata
-
-
-
-
