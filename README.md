@@ -31,7 +31,6 @@ Requirements are stored in `requirements.txt`.
 
 ## Code
 
-### scraping
 
 Stats were scraped from [RealGM.com](https://basketball.realgm.com). 
 This folder documents the web crawler used in the process.
