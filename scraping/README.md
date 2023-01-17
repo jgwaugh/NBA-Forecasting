@@ -7,4 +7,7 @@ in 2016 at the University of Chicago.
 
 To generate the data, run `python crawler.py`
 
+This takes a few hours, so I've done the work locally and saved
+the cleaned outputs in the `munging` folder. 
+
 

@@ -171,9 +171,9 @@ if __name__ == "__main__":
 
     df_transformed.loc[:, columns_scale] = scaled
 
-    joblib.dump(scaler, "scaler")
-    df_named.to_pickle("NBA_stats.pkl")
-    df_transformed.to_pickle("NBA_stats_transformed.pkl")
+    joblib.dump(scaler, "data/scaler")
+    df_named.to_pickle("data/NBA_stats.pkl")
+    df_transformed.to_pickle("data/NBA_stats_transformed.pkl")
 
     #################################################################################
     #
@@ -198,11 +198,11 @@ if __name__ == "__main__":
 
     prediction = prepare_data(recent_players)
 
-    with open("train.pkl", "wb") as fp:  # Pickling train
+    with open("data/train.pkl", "wb") as fp:  # Pickling train
         pickle.dump(train, fp)
 
-    with open("val.pkl", "wb") as fp:  # Pickling val
+    with open("data/val.pkl", "wb") as fp:  # Pickling val
         pickle.dump(val, fp)
 
-    with open("prediction.pkl", "wb") as fp:  # Pickling prediction
+    with open("data/prediction.pkl", "wb") as fp:  # Pickling prediction
         pickle.dump(prediction, fp)
