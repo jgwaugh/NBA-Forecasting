@@ -1,26 +1,22 @@
-import re
-import utility as util
-import bs4
-import queue
-import json
-import sys
 import csv
-import numpy as np
-import urllib.request
+import json
 import os
+import queue
+import re
+import sys
 import time
-from typing import Iterable
+import urllib.request
 import warnings
+from typing import Iterable
 
-from paths import (
-    limiting_domain,
-    limiting_path,
-    starting_url,
-    bad_link
-)
+import bs4
+import numpy as np
+import utility as util
+from paths import bad_link, limiting_domain, limiting_path, starting_url
+
 
 def check_year(yr: str) -> bool:
-    """Checks if year is within the valid interval """
+    """Checks if year is within the valid interval"""
     yr = yr.split("-")
     y = int(yr[0])
     if y >= 1979:
@@ -29,13 +25,29 @@ def check_year(yr: str) -> bool:
         return False
 
 
-def generate_links(soup, proper_url, limiting_domain):
-    '''
+def generate_links(soup: bs4.BeautifulSoup,
+                   proper_url: str,
+                   limiting_domain: str) -> Iterable[str]:
+    """
     Takes a url as input. Returns the urls of all of the pages linked
     to the initial page in list format. Note that for the final version
     that does not only crawl the web, we will also want to get information
     off of these web pages.
-    '''
+
+    Parameters
+    ----------
+    soup : BeautifulSoup object
+        BeautifulSoup representation of web page
+    proper_url: str
+        URL from which to gather links
+    limiting_domain: str
+        Limiting domain (links outside of this domain can't be scraped)
+
+    Returns
+    -------
+    List of links
+
+    """
     # reach out to web page
 
     links_list = soup.find_all("a")
@@ -44,7 +56,7 @@ def generate_links(soup, proper_url, limiting_domain):
     rv = []
     s = set()
     for link in links_list:
-        url = link.get('href')
+        url = link.get("href")
         new_url = util.remove_fragment(url)
 
         converted_url = util.convert_if_relative_url(proper_url, new_url)

@@ -1,13 +1,13 @@
-import urllib.parse
-import requests
 import os
+import urllib.parse
+
 import bs4
+import requests
 from paths import limiting_path
 
 
-
 def get_request(url, verify_not=True):
-    '''
+    """
     Open a connection to the specified URL and if successful
     read the data.
     Inputs:
@@ -17,7 +17,7 @@ def get_request(url, verify_not=True):
         request object or None
     Examples:
         get_request("http://www.cs.uchicago.edu")
-    '''
+    """
 
     if is_absolute_url(url):
         try:
@@ -34,43 +34,43 @@ def get_request(url, verify_not=True):
 
 
 def read_request(request):
-    '''
+    """
     Return data from request object.  Returns result or "" if the read
     fails..
-    '''
+    """
 
     try:
-        return request.text.encode('iso-8859-1')
+        return request.text.encode("iso-8859-1")
     except:
         print("read failed: " + request.url)
         return ""
 
 
 def get_request_url(request):
-    '''
+    """
     Extract true URL from the request
-    '''
+    """
     return request.url
 
 
 def is_absolute_url(url):
-    '''
+    """
     Is url an absolute URL?
-    '''
+    """
     if url == "":
         return False
     return urllib.parse.urlparse(url).netloc != ""
 
 
 def remove_fragment(url):
-    '''remove the fragment from a url'''
+    """remove the fragment from a url"""
 
     (url, frag) = urllib.parse.urldefrag(url)
     return url
 
 
 def convert_if_relative_url(current_url, new_url):
-    '''
+    """
     Attempt to determine whether new_url is a relative URL and if so,
     use current_url to determine the path and create a new absolute
     URL.  Will add the protocol, if that is all that is missing.
@@ -85,7 +85,7 @@ def convert_if_relative_url(current_url, new_url):
             'http://cs.uchicago.edu/pa/pa.html'
         convert_if_relative_url("http://cs.uchicago.edu", "foo.edu/pa.html") yields
             'http://foo.edu/pa.html'
-    '''
+    """
     if new_url == "" or not is_absolute_url(current_url):
         return None
 
@@ -108,7 +108,7 @@ def convert_if_relative_url(current_url, new_url):
 
 
 def is_url_ok_to_follow(url, limiting_domain):
-    '''
+    """
     Inputs:
         url: absolute URL
         limiting domain: domain name
@@ -122,7 +122,7 @@ def is_url_ok_to_follow(url, limiting_domain):
             True
         is_url_ok_to_follow("http://cs.cornell.edu/pa/pa1", "cs.uchicago.edu") yields
             False
-    '''
+    """
 
     if "mailto:" in url:
         return False
@@ -164,7 +164,7 @@ def is_url_ok_to_follow(url, limiting_domain):
 
     loc = parsed_url.netloc
     ld = len(limiting_domain)
-    trunc_loc = loc[-(ld + 1):]
+    trunc_loc = loc[-(ld + 1) :]
 
     if not (limiting_domain == loc or (trunc_loc == "." + limiting_domain)):
         # print("C")
@@ -172,29 +172,32 @@ def is_url_ok_to_follow(url, limiting_domain):
 
     # does it have the right extension
     (filename, ext) = os.path.splitext(parsed_url.path)
-    return (ext == "" or ext == ".html")
+    return ext == "" or ext == ".html"
 
 
 def is_subsequence(tag):
-    '''
+    """
     Does the tag represent a subsequence?
-    '''
-    return isinstance(tag, bs4.element.Tag) and 'class' in tag.attrs \
-        and tag['class'] == ['courseblock', 'subsequence']
+    """
+    return (
+        isinstance(tag, bs4.element.Tag)
+        and "class" in tag.attrs
+        and tag["class"] == ["courseblock", "subsequence"]
+    )
 
 
 def is_whitespace(tag):
-    '''
+    """
     Does the tag represent whitespace?
-    '''
+    """
     return isinstance(tag, bs4.element.NavigableString) and (tag.strip() == "")
 
 
 def find_sequence(tag):
-    '''
+    """
     If tag is the header for a sequence, then
     find the tags for the courses in the sequence.
-    '''
+    """
     rv = []
     sib_tag = tag.next_sibling
     while is_subsequence(sib_tag) or is_whitespace(tag):
