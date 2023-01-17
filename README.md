@@ -30,11 +30,13 @@ Requirements are stored in `requirements.txt`.
 
 
 ## Code
+### scraping
+The `scraping` folder contains a web crawler that grabs
+NBA player data from online. 
+
+### munging
+
+The `munging` folder contains code that preprocesses the data. 
 
 
-Stats were scraped from [RealGM.com](https://basketball.realgm.com). 
-This folder documents the web crawler used in the process.
-
-Note that the code in `utility.py` comes from a class I took 
-in 2016 at the University of Chicago. 
 
