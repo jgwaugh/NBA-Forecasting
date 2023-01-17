@@ -165,3 +165,85 @@ def crawl(
 
     print("steps: ", steps)
     return mydata
+
+
+def make_soup(initial_url : str,
+              limiting_domain : str, start : bool =False) -> Tuple:
+    """Get an individual Player's career data for a given url and limiting domain """
+
+    req1 = util.get_request(initial_url, False)
+    if req1 == None:
+        print('bad')
+
+    proper_url = util.get_request_url(req1)
+    rv = (None, [])
+
+    if util.is_url_ok_to_follow(proper_url, limiting_domain):
+        if "Summary" in proper_url:
+            text = util.read_request(req1)
+            soup = bs4.BeautifulSoup(text, "html5lib")
+            rv = (proper_url, soup)
+    if start:
+        text = util.read_request(req1)
+        soup = bs4.BeautifulSoup(text, "html5lib")
+        rv = (proper_url, soup)
+
+    return rv
+
+
+def soup_to_array(soup : bs4.BeautifulSoup, yr: int) -> List:
+    '''
+    Turns a beautiful soup object into a vector of a player's career data
+    '''
+    s = soup.find_all("title")[0].text.split(",")[0]
+    name = " ".join(s.split(" ")[:-2])
+    tags = soup.find_all('tr', class_='per_game')
+
+    data = {}
+    for tag in tags:
+        if tag.find_all("td", {'id': re.compile(r'teamLinenba_reg_[Per_GameMisc_StatsAdvanced_Stats]+')}):
+            t = tag.text.split('\n')[1:-1]
+            season = int(t[0].split("-")[0]) + 1
+            tally_count = 0
+            if season > 1979 and season == yr:
+                info = []
+                for x in t[2:]:
+                    if x != "-":
+                        info.append(float(x))
+                    else:
+                        tally_count += 1
+                        info.append(0)
+                if season in data:
+                    data[season] += info
+                else:
+                    data[season] = info
+
+    if data != {}:
+        array_data = []
+        for k, v in data.items():
+            d = [k] + [name] + v
+            array_data.append(d)
+
+            if tally_count < 5:
+                return array_data
+            else:
+                return None
+    else:
+        array_data = None
+
+
+def season_to_arrays(season : Iterable, save_name : str):
+    """Saves a season's worth of player data"""
+    names = []
+    numeric = []
+    for player in season:
+        name = player[1]
+        vect = [player[0]] + player[2:]
+        names.append(name)
+        numeric.append(vect)
+
+    names = np.array(names)
+    numeric = np.array(numeric)
+
+    np.save(save_name + "_names", names)
+    np.save(save_name + "_numeric", numeric)
