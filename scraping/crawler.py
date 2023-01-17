@@ -167,13 +167,12 @@ def crawl(
     return mydata
 
 
-def make_soup(initial_url : str,
-              limiting_domain : str, start : bool =False) -> Tuple:
-    """Get an individual Player's career data for a given url and limiting domain """
+def make_soup(initial_url: str, limiting_domain: str, start: bool = False) -> Tuple:
+    """Get an individual Player's career data for a given url and limiting domain"""
 
     req1 = util.get_request(initial_url, False)
     if req1 == None:
-        print('bad')
+        print("bad")
 
     proper_url = util.get_request_url(req1)
     rv = (None, [])
@@ -191,18 +190,21 @@ def make_soup(initial_url : str,
     return rv
 
 
-def soup_to_array(soup : bs4.BeautifulSoup, yr: int) -> List:
-    '''
+def soup_to_array(soup: bs4.BeautifulSoup, yr: int) -> List:
+    """
     Turns a beautiful soup object into a vector of a player's career data
-    '''
+    """
     s = soup.find_all("title")[0].text.split(",")[0]
     name = " ".join(s.split(" ")[:-2])
-    tags = soup.find_all('tr', class_='per_game')
+    tags = soup.find_all("tr", class_="per_game")
 
     data = {}
     for tag in tags:
-        if tag.find_all("td", {'id': re.compile(r'teamLinenba_reg_[Per_GameMisc_StatsAdvanced_Stats]+')}):
-            t = tag.text.split('\n')[1:-1]
+        if tag.find_all(
+            "td",
+            {"id": re.compile(r"teamLinenba_reg_[Per_GameMisc_StatsAdvanced_Stats]+")},
+        ):
+            t = tag.text.split("\n")[1:-1]
             season = int(t[0].split("-")[0]) + 1
             tally_count = 0
             if season > 1979 and season == yr:
@@ -232,7 +234,7 @@ def soup_to_array(soup : bs4.BeautifulSoup, yr: int) -> List:
         array_data = None
 
 
-def season_to_arrays(season : Iterable, save_name : str):
+def season_to_arrays(season: Iterable, save_name: str):
     """Saves a season's worth of player data"""
     names = []
     numeric = []
