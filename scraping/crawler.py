@@ -69,8 +69,9 @@ def generate_links(
                     rv.append(converted_url)
     return rv
 
-def list_to_queue(list_ : List) -> queue.Queue:
-    '''Put all of the starting links into the initial queue '''
+
+def list_to_queue(list_: List) -> queue.Queue:
+    """Put all of the starting links into the initial queue"""
     q = queue.Queue()
     for term in list_:
         q.put(term)
