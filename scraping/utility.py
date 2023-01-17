@@ -2,10 +2,8 @@ import urllib.parse
 import requests
 import os
 import bs4
+from paths import limiting_path
 
-limiting_domain = "basketball.realgm.com"
-starting_url = "http://basketball.realgm.com/nba/teams"
-limiting_path = '/player/'
 
 
 def get_request(url, verify_not=True):
