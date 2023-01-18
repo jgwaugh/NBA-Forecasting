@@ -40,8 +40,8 @@ class BatchGenerator(object):
         self.data_size = len(data)
 
     def generate(self):
-        """Yields prediction pairs of the form train =(X_{i-step_size},..., X_{i - 1})
-        and test = X_i"""
+        """Yields prediction pairs of the form X =(X_{i-step_size},..., X_{i - 1})
+        and y = X_i"""
         while True:
             if self.current_idx >= len(self.data):
                 self.current_idx = 0
