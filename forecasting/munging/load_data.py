@@ -68,7 +68,6 @@ def transform_to_array(info: List) -> NDArray:
     return rv
 
 
-
 def prepare_data(data: pd.DataFrame) -> List[Tuple[str, NDArray]]:
     """
     Gets data ready to feed to the NN
