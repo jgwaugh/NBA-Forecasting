@@ -40,9 +40,13 @@ _, model = load_model(None, None, retrain=False)
 
 st.write(
     """
-# Player Career Prediction Validation
+# Player Career Prediction Validation at t = 2 years
 Below, we can view predictions of various player careers, along with their actual
 careers, as a way of validating model performance. 
+
+These forecasts are made from 2 years into a player's career. The model was not trained
+on these players. 
+
 """
 )
 
@@ -64,12 +68,9 @@ stat = st.selectbox("Select a stat of forecasts to view", stats)
 player_df = df_raw[df_raw.PLAYER == player]
 prediction_df = player_df.copy()
 
-import ipdb; ipdb.set_trace()
-
 predicted_career_df = pd.DataFrame(predicted_career, columns=player_df.columns[2:-2])
 predicted_career_df.insert(0, "YR", player_df["YR"].values)
 predicted_career_df.insert(0, "PLAYER", player_df["PLAYER"].values)
-
 
 true_stat = player_df[stat].values
 predicted_stat = predicted_career_df[stat].values
