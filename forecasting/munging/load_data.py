@@ -2,7 +2,7 @@ import pickle
 import random
 from os.path import abspath, dirname
 from pathlib import Path
-from typing import Iterable, List, Tuple
+from typing import List, Tuple
 
 import joblib
 import numpy as np
@@ -10,8 +10,8 @@ import pandas as pd
 from numpy.typing import NDArray
 from sklearn.preprocessing import MinMaxScaler
 
-stats = "YR GP GS MIN FGM FGA FGP 3PM 3PA 3PP FTM FTA FTP OFF DEF TREB AST STL BLK PF TOV PTS GP GS DBLDBL TPLDBL 40P 20P 20AS Techs HOB AST_TO STL_TO FT_FGA W L WP OWS DWS WS GP GS TSP EFGP ORBP DRBP TRBP ASTP TOVP STLP BLKP USGP TOTSP PPR PPS ORtg DRtg PER"
-cutoff_year = 1990
+stats = "YR GP GS MIN PTS FGM FGA FGP 3PM 3PA 3PP FTM FTA FTP OFF DEF TREB AST STL BLK TOV PF GP GS DBLDBL TPLDBL 40P 20R 20AS Techs HOB AST_TO STL_TO FT_FGA W L WP OWS DWS WS GP GS TSP EFGP ORBP DRBP TRBP ASTP TOVP STLP BLKP USGP TOTSP PPR PPS ORtg DRtg PER"
+cutoff_year = 2020
 
 
 def multi_team_player_avg(l: List) -> NDArray:

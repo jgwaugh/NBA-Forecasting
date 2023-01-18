@@ -17,10 +17,10 @@ def create_model() -> Sequential:
     """Creates the LSTM model"""
 
     model = Sequential()
-    model.add(LSTM(128, return_sequences=True, input_shape=(None, 57), batch_size=None))
+    model.add(LSTM(128, return_sequences=True, input_shape=(None, 53), batch_size=None))
     model.add(LSTM(64, return_sequences=True))
     model.add(Dropout(0.4))
-    model.add(TimeDistributed(Dense(57, activation="linear")))
+    model.add(TimeDistributed(Dense(53, activation="linear")))
 
     return model
 
@@ -112,13 +112,13 @@ def predict_player_career(
 
     # begin prediction with first n seasons
     career_pred = career_data[:look_back, :]
-    career_pred_tensor = np.reshape(career_pred, (1, look_back, 57))
+    career_pred_tensor = np.reshape(career_pred, (1, look_back, 53))
     first_pred = model.predict(career_pred_tensor)[0, -1, :]
     career_pred = np.vstack((career_pred, first_pred))
 
     for i in range(n_pred - 1):
         num_seasons_pred = career_pred.shape[0]
-        career_pred_tensor = np.reshape(career_pred, (1, num_seasons_pred, 57))
+        career_pred_tensor = np.reshape(career_pred, (1, num_seasons_pred, 53))
         prediction = model.predict(career_pred_tensor)[0, -1, :]
         career_pred = np.vstack((career_pred, prediction))
 

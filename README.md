@@ -31,24 +31,9 @@ To install deps and build the environment, run `source install.sh`in a terminal 
 The repo is set up as a python package, to make imports between
 modules easier. 
 
-## Code
-### scraping
-The `scraping` folder contains a web crawler that grabs
-NBA player data from online. 
-
-### munging
-
-The `munging` folder contains code that preprocesses the data. 
-
-
-### training
-
-Training takes place in this folder. 
-
-
 
 ## Future Steps
 
 Future work here should: 
-1. Better tune hyperparameters
+1. Better tune hyperparameters 
 2. Add non parametric confidence intervals to the predictions. 
