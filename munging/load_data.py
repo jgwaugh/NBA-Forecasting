@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Iterable, List, Tuple
 
 import joblib
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from numpy.typing import NDArray
@@ -119,7 +118,7 @@ if __name__ == "__main__":
     all_names = []
     all_stats = []
 
-    for yr in range(1980, 1990):
+    for yr in range(1980, 2023):
         yr_str = str(yr)
         name_str = yr_str + "_names.npy"
         numeric_str = yr_str + "_numeric.npy"
