@@ -59,17 +59,13 @@ if __name__ == "__main__":
     val_loss = train_history.history["val_loss"]
     epochs = range(1, 31)
 
-    fig = plt.figure()
+    fig = plt.figure(dpi=100)
 
-    # plt.plot(epochs, train_loss, color = "red", label = "Training Loss")
     plt.plot(epochs, val_loss, color="blue", label="Validation Loss")
 
     plt.ylabel("Least Squares Loss")
     plt.xlabel("Epoch")
     plt.title("Validation Loss vs Epoch")
-
-    fig.set_size_inches(4, 4)
-
     plt.show()
 
     fig.savefig("validation_loss.png", bbox_inches="tight")

@@ -44,3 +44,11 @@ The `munging` folder contains code that preprocesses the data.
 ### training
 
 Training takes place in this folder. 
+
+
+
+## Future Steps
+
+Future work here should: 
+1. Better tune hyperparameters
+2. Add non parametric confidence intervals to the predictions. 
