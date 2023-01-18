@@ -6,7 +6,7 @@ from typing import Iterable, List, Set, Tuple
 import bs4
 import numpy as np
 import utility as util
-from paths import bad_link, limiting_domain, limiting_path, starting_url
+from paths import limiting_domain, starting_url
 from tqdm import tqdm
 
 warnings.filterwarnings("ignore")
@@ -252,10 +252,7 @@ def season_to_arrays(season: Iterable, save_name: str):
 
 
 if __name__ == "__main__":
-    starting_url = "https://basketball.realgm.com/nba/players/"
-    limiting_path = "/player/"
-
-    start_yr = 1987
+    start_yr = 1980
     end_yr = 2023
 
     all_data = []
