@@ -6,7 +6,9 @@ and `train.py` is the training script.
 Note that at this point, I don't tune hyperparameters. I may 
 return to this at a later point in development. I have generally
 found that hyperparameter tuning can have pretty marginal impact
-on model outcome, although that does change with neural networks. 
+on model outcome, although that does change with neural networks. I'd
+want to tune network depth / number of parameters and maybe dropout rate. 
+
 
 
 ## Validation Loss 

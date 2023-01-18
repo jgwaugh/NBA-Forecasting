@@ -2,16 +2,13 @@ import pickle
 import warnings
 from os.path import abspath, dirname
 from pathlib import Path
-from typing import Iterable, List, Tuple
+from typing import List, Tuple
 
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
 from model import load_model
 
 warnings.filterwarnings("ignore", message=r"Passing", category=FutureWarning)
 
-import joblib
 from batchgenerator import BatchGenerator
 from numpy.typing import NDArray
 
@@ -58,10 +55,6 @@ if __name__ == "__main__":
 
     train_history, model = load_model(train_generator, val_generator, retrain=True)
 
-    import ipdb
-
-    ipdb.set_trace()
-
     train_loss = train_history.history["loss"]
     val_loss = train_history.history["val_loss"]
     epochs = range(1, 31)
@@ -75,7 +68,7 @@ if __name__ == "__main__":
     plt.xlabel("Epoch")
     plt.title("Validation Loss vs Epoch")
 
-    fig.set_size_inches(10, 10)
+    fig.set_size_inches(4, 4)
 
     plt.show()
 
