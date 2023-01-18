@@ -28,7 +28,8 @@ and `conda` (to circumvent long `tensforflow` compilation / builds from scratch)
 
 To install deps and build the environment, run `source install.sh`in a terminal shell. 
 
-
+The repo is set up as a python package, to make imports between
+modules easier. 
 
 ## Code
 ### scraping
