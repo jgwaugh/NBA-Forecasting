@@ -3,16 +3,13 @@ from os.path import abspath, dirname
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import seaborn as sns
-
-import numpy as np
 from model import load_model
-from train import filter_set
-
 from numpy.typing import NDArray
-
 from tensorflow.keras.models import Sequential
+from train import filter_set
 
 
 def predict_career_steps(career_data: NDArray, model: Sequential) -> NDArray:
@@ -26,6 +23,7 @@ def predict_career_steps(career_data: NDArray, model: Sequential) -> NDArray:
         predictions.append(prediction.reshape(1, -1))
 
     return np.vstack(predictions)
+
 
 data_directory = (
     Path(dirname(dirname(abspath(__file__)))).joinpath("munging").joinpath("data")
@@ -60,16 +58,11 @@ model_error = np.mean(model_error)
 baseline_error = np.mean(baseline_error)
 
 df_plt = pd.DataFrame(
-    {
-        'Model' : ['Lag', 'LSTM'],
-        'Error' : [baseline_error, model_error]
-    }
+    {"Model": ["Lag", "LSTM"], "Error": [baseline_error, model_error]}
 )
 
-f = plt.figure(dpi = 100)
+f = plt.figure(dpi=100)
 
-sns.barplot(x = 'Model',
-            y = 'Error',
-            data = df_plt)
+sns.barplot(x="Model", y="Error", data=df_plt)
 
-f.savefig('baseline_error_comparison.png')
+f.savefig("baseline_error_comparison.png")
