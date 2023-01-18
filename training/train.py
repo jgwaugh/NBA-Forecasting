@@ -1,33 +1,25 @@
-import pandas as pd
-import numpy as np
 import pickle
-
 import warnings
+
+import numpy as np
+import pandas as pd
+
 warnings.filterwarnings("ignore", message=r"Passing", category=FutureWarning)
 
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import (
-    LSTM,
-    Dense,
-    TimeDistributed,
-    Dropout,
-    Flatten
-)
-
-from pathlib import Path
-
 from os.path import abspath, dirname
+from pathlib import Path
+from typing import Iterable, List, Tuple
+
 import joblib
-from typing import Tuple, Iterable, List
-from numpy.typing import NDArray
-
 from batchgenerator import BatchGenerator
+from numpy.typing import NDArray
+from tensorflow.keras.layers import LSTM, Dense, Dropout, Flatten, TimeDistributed
+from tensorflow.keras.models import Sequential
 
 
-
-
-
-def filter_set(data : List[Tuple[str, NDArray]], num_seasons : int) -> List[Tuple[str, NDArray]]:
+def filter_set(
+    data: List[Tuple[str, NDArray]], num_seasons: int
+) -> List[Tuple[str, NDArray]]:
     """
     Filters the data so that only players with a minimum number of seasons played are included
 
@@ -49,12 +41,14 @@ def filter_set(data : List[Tuple[str, NDArray]], num_seasons : int) -> List[Tupl
 
 
 if __name__ == "__main__":
-    data_directory = Path(dirname(dirname(abspath(__file__)))).joinpath("munging").joinpath('data')
+    data_directory = (
+        Path(dirname(dirname(abspath(__file__)))).joinpath("munging").joinpath("data")
+    )
 
-    with open(data_directory.joinpath('val.pkl'), 'rb') as fp:
+    with open(data_directory.joinpath("val.pkl"), "rb") as fp:
         val_load = pickle.load(fp)
 
-    with open(data_directory.joinpath('train.pkl'), 'rb') as fp:
+    with open(data_directory.joinpath("train.pkl"), "rb") as fp:
         train_load = pickle.load(fp)
 
     train = filter_set(train_load, 3)
