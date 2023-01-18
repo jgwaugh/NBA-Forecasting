@@ -33,17 +33,19 @@ that looks like the following:
 ![alt text](klay_pts.png)
 
 
-## Statistical Comparison
+## Baseline Comparison
 
-Additionally, I compare errors to a null baseline. I define a statistic, which I call
-`T`, as the average RMSE between career predictions and true career 
+Additionally, I compare errors to a lagged baseline. I compare the average 
+MSE between career predictions and true career 
 outcomes, averaged over all seasons for a player and averaged over 
 all players. 
 
-I define a "null distribution" as the distribution generated 
-by sampling randomly from the training set. In other words,
-this gives an estimate of how much better, or worse, 
-than random I am. 
+At each timestep `K`, the model uses all `k < K` to make predictions,
+competing against a simple lag. As shown below, the model 
+handily beats the lag. 
+
+![alt text](baseline_error_comparison.png)
+
 
 More rigorous baselines are always a good idea. That can come with time. 
 
