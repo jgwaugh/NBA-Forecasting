@@ -20,14 +20,14 @@ vector prediction nature of the problem lends itself to recurrent neural network
 Modeling was done using `python 3.7.15` and virtual
 environments were managed using `conda`.
 
-You can build the environment using 
-
-```
-conda create -n nba_forecasting python=3.7.15
-```
-
 Requirements are stored in `requirements.txt` 
-and can be installed with `pip install -r requirements.txt`. 
+
+I found it easiest to install deps with both `pip` (out of habit)
+and `conda` (to circumvent long `tensforflow` compilation / builds from scratch)
+. 
+
+To install deps and build the environment, run `source install.sh`in a terminal shell. 
+
 
 
 ## Code
@@ -40,4 +40,6 @@ NBA player data from online.
 The `munging` folder contains code that preprocesses the data. 
 
 
+### training
 
+Training takes place in this folder. 
