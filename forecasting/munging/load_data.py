@@ -68,16 +68,6 @@ def transform_to_array(info: List) -> NDArray:
     return rv
 
 
-def remove_duplicate_stats(columns: Iterable) -> List:
-    """Removes duplicate column names while preserving order"""
-    seen = set()
-    rv = []
-    for col in columns:
-        if col not in seen:
-            rv.append(col)
-            seen.add(col)
-    return rv
-
 
 def prepare_data(data: pd.DataFrame) -> List[Tuple[str, NDArray]]:
     """
@@ -159,7 +149,7 @@ if __name__ == "__main__":
     career = career.reset_index(drop=True)
 
     df_named = df_named.merge(career, on="PLAYER", how="left")
-    df_named = df_named[remove_duplicate_stats(df_named.columns)]
+    df_named = df_named.loc[:, ~df_named.columns.duplicated()]
 
     df_transformed = df_named.copy()
 
