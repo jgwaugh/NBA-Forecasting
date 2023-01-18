@@ -76,7 +76,7 @@ def load_model(
 
 
 def predict_player_career(
-    career_data : NDArray,
+    career_data: NDArray,
     model: Sequential,
     n_pred: bool = 10,
     full_career: bool = True,
@@ -106,7 +106,6 @@ def predict_player_career(
         Vector of career data
 
     """
-
 
     if full_career:
         n_pred = len(career_data) - look_back
