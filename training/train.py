@@ -1,20 +1,19 @@
 import pickle
 import warnings
-
-import numpy as np
-import pandas as pd
-
-warnings.filterwarnings("ignore", message=r"Passing", category=FutureWarning)
-
 from os.path import abspath, dirname
 from pathlib import Path
 from typing import Iterable, List, Tuple
 
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from model import load_model
+
+warnings.filterwarnings("ignore", message=r"Passing", category=FutureWarning)
+
 import joblib
 from batchgenerator import BatchGenerator
 from numpy.typing import NDArray
-from tensorflow.keras.layers import LSTM, Dense, Dropout, Flatten, TimeDistributed
-from tensorflow.keras.models import Sequential
 
 
 def filter_set(
@@ -56,3 +55,28 @@ if __name__ == "__main__":
 
     train_generator = BatchGenerator(train)
     val_generator = BatchGenerator(val)
+
+    train_history, model = load_model(train_generator, val_generator, retrain=True)
+
+    import ipdb
+
+    ipdb.set_trace()
+
+    train_loss = train_history.history["loss"]
+    val_loss = train_history.history["val_loss"]
+    epochs = range(1, 31)
+
+    fig = plt.figure()
+
+    # plt.plot(epochs, train_loss, color = "red", label = "Training Loss")
+    plt.plot(epochs, val_loss, color="blue", label="Validation Loss")
+
+    plt.ylabel("Least Squares Loss")
+    plt.xlabel("Epoch")
+    plt.title("Validation Loss vs Epoch")
+
+    fig.set_size_inches(10, 10)
+
+    plt.show()
+
+    fig.savefig("validation_loss.png", bbox_inches="tight")
