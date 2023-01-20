@@ -16,10 +16,7 @@ def check_year(yr: str) -> bool:
     """Checks if year is within the valid interval"""
     yr = yr.split("-")
     y = int(yr[0])
-    if y >= 1979:
-        return True
-    else:
-        return False
+    return y >= 1979
 
 
 def generate_links(
@@ -59,7 +56,7 @@ def generate_links(
         converted_url = util.convert_if_relative_url(proper_url, new_url)
 
         converted_url = str(converted_url)
-        if converted_url != None:
+        if converted_url:
             if util.is_url_ok_to_follow(converted_url, limiting_domain):
                 if converted_url not in s:
                     s.add(converted_url)
