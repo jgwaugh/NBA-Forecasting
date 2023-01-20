@@ -68,6 +68,13 @@ stat = st.selectbox("Select a stat of forecasts to view", stats)
 player_df = df_raw[df_raw.PLAYER == player]
 prediction_df = player_df.copy()
 
+
+###########################################################################
+#
+# Plot Career Trajectory
+#
+###########################################################################
+
 predicted_career_df = pd.DataFrame(predicted_career, columns=player_df.columns[2:-2])
 predicted_career_df.insert(0, "YR", player_df["YR"].values)
 predicted_career_df.insert(0, "PLAYER", player_df["PLAYER"].values)
