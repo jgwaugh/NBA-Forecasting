@@ -252,7 +252,6 @@ if __name__ == "__main__":
     start_yr = 1980
     end_yr = 2023
 
-    all_data = []
     for yr in tqdm(range(start_yr, end_yr)):
         try:
             print(yr)
