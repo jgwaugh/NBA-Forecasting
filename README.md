@@ -31,9 +31,30 @@ To install deps and build the environment, run `source install.sh`in a terminal 
 The repo is set up as a python package, to make imports between
 modules easier. 
 
+## Running
+
+To make forecasts (after installing), activate your `environment`
+with 
+```
+conda activate nba_forecasting
+``` 
+
+then run 
+
+```
+streamlit run app.py
+```
+
+The application should look something like this:
+
+![alt text](images/app_top.png)
+![alt text](images/app_bottom.png)
 
 ## Future Steps
 
 Future work here should: 
-1. Better tune hyperparameters 
-2. Add non parametric confidence intervals to the predictions. 
+1. Better handle aging of players
+    1. Could be solved by adding longer lookback to batch generator in training
+   2. Could also be solved by adding more hyperparameters
+2. Better tune hyperparameters 
+3. Add non parametric confidence intervals to the predictions. 
