@@ -50,6 +50,16 @@ The application should look something like this:
 ![alt text](images/app_top.png)
 ![alt text](images/app_bottom.png)
 
+**Note** The LSTM struggles to handle the career progression of star players
+(Lebron James, Joel Embiid etc). In particular, if a player performs at a high
+level (25 points per game), the model may project that in 5 years, he will
+average 50 points per game, which is highly unrealistic. This is an area
+for future improvement. To see an example, use the "PTS" state (points per game)
+for Lebron. 
+
+For more validation of the model, including 
+performance comparison against a baseline model, look [here](forecasting/training/README.md).
+
 ## Future Steps
 
 Future work here should: 

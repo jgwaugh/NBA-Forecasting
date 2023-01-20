@@ -97,6 +97,12 @@ n_seasons_predict = st.slider(
 player_idx = np.where(np.array(player_names) == player)[0][0]
 len_current_career = len(players[player_idx][1])
 
+###########################################################################
+#
+# Predict Career
+#
+###########################################################################
+
 predicted_career = predict_player_career(
     players[player_idx][1],
     model,
@@ -121,6 +127,13 @@ years += [last_year + j for j in range(1, n_seasons_predict + 1)]
 predicted_career_df = pd.DataFrame(predicted_career, columns=player_df.columns[2:-2])
 predicted_career_df.insert(0, "YR", years)
 predicted_career_df.insert(0, "PLAYER", [player] * len(predicted_career_df))
+
+
+###########################################################################
+#
+# Plot
+#
+###########################################################################
 
 true_stat = player_df[stat].values
 predicted_stat = predicted_career_df[stat].values
