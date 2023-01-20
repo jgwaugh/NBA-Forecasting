@@ -10,5 +10,6 @@ The `munging` folder contains code that preprocesses the data.
 
 ### training
 
-Training takes place in this folder. 
+Training takes place in this folder. Look here for more information on 
+model validation / performance compared to a baseline. 
 
