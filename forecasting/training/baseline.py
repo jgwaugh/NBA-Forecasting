@@ -1,13 +1,13 @@
 import pickle
 from os.path import abspath, dirname
 from pathlib import Path
+from typing import List, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
 from model import load_model
-from typing import List, Tuple
 from numpy.typing import NDArray
 from tensorflow.keras.models import Sequential
 from train import filter_set
@@ -25,7 +25,10 @@ def predict_career_steps(career_data: NDArray, model: Sequential) -> NDArray:
 
     return np.vstack(predictions)
 
-def generate_baseline_comparison(data: List[Tuple[str, NDArray]], model: Sequential) -> Tuple[float]:
+
+def generate_baseline_comparison(
+    data: List[Tuple[str, NDArray]], model: Sequential
+) -> Tuple[float]:
     """
     Compares the model performance to a lagged baseline. Here, error is defined
     as the L2 distance between a predicted season and the actual season,
@@ -68,7 +71,6 @@ def generate_baseline_comparison(data: List[Tuple[str, NDArray]], model: Sequent
     baseline_error = np.mean(baseline_error)
 
     return model_error, baseline_error
-
 
 
 data_directory = (
