@@ -1,8 +1,8 @@
 # NBA-Forecasting
 
 ## Background 
-This repo contains code from a 2019 independent project where
-I looked to predict NBA player career using LSTM recurrent neural networks. 
+This repo contains code from an independent project where
+I predict NBA player career using LSTM recurrent neural networks. 
 
 Code was revisited and cleaned in January 2023. 
 
@@ -33,17 +33,11 @@ modules easier.
 
 ## Running
 
-To make forecasts (after installing), activate your `environment`
-with 
+To make forecasts (after installing), run
 ```
-conda activate nba_forecasting
+conda activate nba_forecasting && streamlit run app.py
 ``` 
 
-then run 
-
-```
-streamlit run app.py
-```
 
 The application should look something like this:
 
@@ -52,8 +46,8 @@ The application should look something like this:
 
 **Note** The LSTM struggles to handle the career progression of star players
 (Lebron James, Joel Embiid etc). In particular, if a player performs at a high
-level (25 points per game), the model may project that in 5 years, he will
-average 50 points per game, which is highly unrealistic. This is an area
+level (e.g. 25 points per game), the model may project that in 5 years, he will
+average 50 points per game,which is highly unrealistic. This is an area
 for future improvement. To see an example, use the "PTS" state (points per game)
 for Lebron. 
 
