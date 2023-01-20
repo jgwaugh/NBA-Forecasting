@@ -69,4 +69,4 @@ if __name__ == "__main__":
     plt.title("Validation Loss vs Epoch")
     plt.show()
 
-    fig.savefig("validation_loss.png", bbox_inches="tight")
+    fig.savefig("images/validation_loss.png", bbox_inches="tight")

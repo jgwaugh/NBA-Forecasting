@@ -13,7 +13,7 @@ searches take prohibitively long.
 
 
 ## Validation Loss 
-![alt text](validation_loss.png)
+![alt text](images/validation_loss.png)
 
 Validation MSE decreases as a function of epoch which 
 is a promising sign that the model is indeed learning something. 
@@ -28,9 +28,9 @@ actual player performance - to do this, run
 `streamlit run app.py` in the terminal. You'll see something
 that looks like the following:
 
-![alt text](app_layout.png)
+![alt text](images/app_layout.png)
 
-![alt text](klay_pts.png)
+![alt text](images/klay_pts.png)
 
 
 ## Baseline Comparison
@@ -44,7 +44,7 @@ At each timestep `K`, the model uses all `k < K` to make predictions,
 competing against a simple lag. As shown below, the model 
  beats the lag. 
 
-![alt text](baseline_error_comparison.png)
+![alt text](images/baseline_error_comparison.png)
 
 
 More rigorous baselines are always a good idea. That can come with time. 

@@ -94,4 +94,4 @@ f = plt.figure(dpi=100)
 
 sns.barplot(x="Model", y="Error", data=df_plt)
 
-f.savefig("baseline_error_comparison.png")
+f.savefig("images/baseline_error_comparison.png")
