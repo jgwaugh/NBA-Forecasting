@@ -48,7 +48,7 @@ The application should look something like this:
 (Lebron James, Joel Embiid etc). In particular, if a player performs at a high
 level (e.g. 25 points per game), the model may project that in 5 years, he will
 average 50 points per game,which is highly unrealistic. This is an area
-for future improvement. To see an example, use the "PTS" state (points per game)
+for future improvement. To see an example, use the "PTS" stat (points per game)
 for Lebron. 
 
 For more validation of the model, including 
