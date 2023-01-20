@@ -7,7 +7,7 @@ warnings.filterwarnings("ignore", message=r"Passing", category=FutureWarning)
 
 
 import numpy as np
-from batchgenerator import BatchGenerator
+from forecasting.training.batchgenerator import BatchGenerator
 from numpy.typing import NDArray
 from tensorflow.keras.layers import LSTM, Dense, Dropout, TimeDistributed
 from tensorflow.keras.models import Sequential

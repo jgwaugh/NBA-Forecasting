@@ -87,5 +87,6 @@ plt.title(
     player + " Career " + stat + " and Predictions \n based on " + str(2) + " seasons"
 )
 plt.legend(loc="upper left")
+plt.xticks(rotation=30)
 
 st.pyplot(fig)

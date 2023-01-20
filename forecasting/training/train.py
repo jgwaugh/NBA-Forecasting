@@ -9,7 +9,7 @@ from model import load_model
 
 warnings.filterwarnings("ignore", message=r"Passing", category=FutureWarning)
 
-from batchgenerator import BatchGenerator
+from .batchgenerator import BatchGenerator
 from numpy.typing import NDArray
 
 
