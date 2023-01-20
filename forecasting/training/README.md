@@ -15,10 +15,10 @@ searches take prohibitively long.
 ## Validation Loss 
 ![alt text](validation_loss.png)
 
-Validation MSE decreases as a function of epoch, which 
+Validation MSE decreases as a function of epoch which 
 is a promising sign that the model is indeed learning something. 
 It also indicates that 30 epochs is roughly appropriate - 
-the curve tends to flatten around epoch 20.
+although more epochs could potentially be used.
 
 
 ## Forecasts
@@ -42,7 +42,7 @@ all players.
 
 At each timestep `K`, the model uses all `k < K` to make predictions,
 competing against a simple lag. As shown below, the model 
-handily beats the lag. 
+ beats the lag. 
 
 ![alt text](baseline_error_comparison.png)
 
