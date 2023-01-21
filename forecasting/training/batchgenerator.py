@@ -57,11 +57,11 @@ class BatchGenerator(object):
             batchsize = player.shape[0] - step_size
 
             X = np.zeros((batchsize, step_size, player.shape[1]))
-            y = np.zeros((batchsize, 1, player.shape[1]))
+            y = np.zeros((batchsize, step_size, player.shape[1]))
 
             for i in range(0, batchsize):
                 X[i, :, :] = player[i : i + step_size, :]
-                y[i, :, :] = player[i + step_size : i + 1 + step_size, :]
+                y[i, :, :] = player[i + 1 : i + 1 + step_size, :]
             self.current_idx += 1
 
             yield X, y

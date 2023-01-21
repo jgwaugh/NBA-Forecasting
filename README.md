@@ -44,21 +44,12 @@ The application should look something like this:
 ![alt text](images/app_top.png)
 ![alt text](images/app_bottom.png)
 
-**Note** The LSTM struggles to handle the career progression of star players
-(Lebron James, Joel Embiid etc). In particular, if a player performs at a high
-level (e.g. 25 points per game), the model may project that in 5 years, he will
-average 50 points per game which is highly unrealistic. This is an area
-for future improvement. To see an example, use the "PTS" stat (points per game)
-for Lebron. 
 
-For more validation of the model, including 
+For information on validation of the model, including 
 performance comparison against a baseline model, look [here](forecasting/training/README.md).
 
 ## Future Steps
 
-Future work here should: 
-1. Better handle aging of players
-    1. Could be solved by adding longer lookback to batch generator in training
-   2. Could also be solved by adding more hyperparameters
-2. Better tune hyperparameters 
+Future work here should:
+1. Better tune hyperparameters 
 3. Add non parametric confidence intervals to the predictions. 
