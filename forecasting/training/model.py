@@ -20,7 +20,7 @@ def create_model() -> Sequential:
     model = Sequential()
     model.add(LSTM(128, return_sequences=True, input_shape=(None, 53), batch_size=None))
     model.add(LSTM(64, return_sequences=True))
-    model.add(Dropout(0.4))
+    model.add(Dropout(0.2))
     model.add(TimeDistributed(Dense(53, activation="linear")))
 
     return model
