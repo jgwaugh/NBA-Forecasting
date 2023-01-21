@@ -77,7 +77,7 @@ players = load_current_players(2022)
 
 st.write(
     """
-# Player Career Prediction Validation 
+# Player Career Prediction 
 
 This application predicts the trajectory of an NBA player over the course of their career,
 based on all available career data as of the 2022 season. 
