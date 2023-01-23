@@ -45,6 +45,8 @@ The application should look something like this:
 ![alt text](images/app_bottom.png)
 
 
+## Historical Validation
+
 For information on validation of the model, including 
 performance comparison against a baseline model, look [here](forecasting/training/README.md).
 
