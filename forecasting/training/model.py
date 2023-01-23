@@ -61,7 +61,7 @@ def load_model(
         train_history = model.fit_generator(
             train_generator.generate(),
             steps_per_epoch=train_generator.data_size,
-            epochs=30,
+            epochs=15,
             validation_data=val_generator.generate(),
             validation_steps=val_generator.data_size,
         )

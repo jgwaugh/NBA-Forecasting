@@ -12,9 +12,6 @@ class BatchGenerator(object):
     ----------
     data : list
         list of tuples of the form (player_name, career)
-    step_size : int
-        The number of timesteps back to look when predicting. Set to 2 to maximize
-        quantity of data.
     current_idx : int
         The current player index as the generator moves sequentially - once it reaches
         the max size, it resets to zero
@@ -23,20 +20,16 @@ class BatchGenerator(object):
 
     """
 
-    def __init__(self, data: List[Tuple[str, NDArray]], step_size: int = 2):
+    def __init__(self, data: List[Tuple[str, NDArray]]):
         """
         Parameters
         ----------
         data : list
             list of tuples of the form (player_name, career)
-        step_size : int
-            The number of timesteps back to look when predicting. Set to 2 to maximize
-            quantity of data.
 
         """
         self.data = data
         self.current_idx = 0
-        self.step_size = step_size
         self.data_size = len(data)
 
     def generate(self):
@@ -51,8 +44,11 @@ class BatchGenerator(object):
 
             if num_obs == 2:
                 step_size = 1
+            elif num_obs < 9:
+                step_size = 3
             else:
-                step_size = self.step_size
+                step_size = 4
+
 
             batchsize = player.shape[0] - step_size
 

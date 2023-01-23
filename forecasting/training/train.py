@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     train_loss = train_history.history["loss"]
     val_loss = train_history.history["val_loss"]
-    epochs = range(1, 31)
+    epochs = range(1, 16)
 
     fig = plt.figure(dpi=100)
 
