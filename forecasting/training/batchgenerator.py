@@ -49,7 +49,6 @@ class BatchGenerator(object):
             else:
                 step_size = 4
 
-
             batchsize = player.shape[0] - step_size
 
             X = np.zeros((batchsize, step_size, player.shape[1]))
