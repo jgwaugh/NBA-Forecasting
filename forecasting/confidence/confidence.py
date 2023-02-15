@@ -138,3 +138,29 @@ class ErrorPredictor(object):
 
         self.best_model = deepcopy(model.best_estimator_)
         return deepcopy(model.best_estimator_)
+
+    def predict_sigma(self, stat:str, X: NDArray) -> NDArray:
+        """
+        Predicts the standard error of a set of observations
+
+        Parameters
+        ----------
+        stat : str
+            The statistic to predict standard errors for
+        X : array like
+            The data to predict with
+
+        Returns
+        -------
+        numpy array
+            The standard errors for the given statistic
+
+        """
+
+        X = check_array(X)
+        model = self.models[stat]
+
+        if isinstance(model, type(None)):
+            raise ValueError(f"Model has not yet been fitted for {stat}")
+
+        return np.exp(model.predict(X))
