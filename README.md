@@ -7,11 +7,11 @@ I predict NBA player career using LSTM recurrent neural networks.
 Code was revisited and cleaned in January 2023. 
 
 The basic idea is that a career is a time series of vectors 
-`X_1, X_2, ...., X_N` where `X_j` is a `k` dimensional vector 
+$X_1, X_2, ...., X_N$ where $X_j$ is a $k$ dimensional vector 
 of points, rebounds, and other statistics that measure performance 
 over the course of a season. My goal is sequence prediction - 
-given observations `X_1, ..., X_p` I want to predict
-`X_p+1, ..., X_N` to determine how a career changes over time. The 
+given observations $X_1, ..., X_p$ I want to predict
+$X_{p+1}, ..., X_N$ to determine how a career changes over time. The 
 vector prediction nature of the problem lends itself to recurrent neural networks. 
 
 
