@@ -139,7 +139,7 @@ class ErrorPredictor(object):
         self.best_model = deepcopy(model.best_estimator_)
         return deepcopy(model.best_estimator_)
 
-    def predict_sigma(self, stat:str, X: NDArray) -> NDArray:
+    def predict_sigma(self, stat: str, X: NDArray) -> NDArray:
         """
         Predicts the standard error of a set of observations
 
