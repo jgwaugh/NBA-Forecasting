@@ -7,6 +7,8 @@ from sklearn.base import RegressorMixin
 from sklearn.model_selection import GridSearchCV, LeavePGroupsOut
 from sklearn.utils import check_X_y
 
+from sklearn.utils import check_array
+
 
 class ErrorPredictor(object):
     """
@@ -52,6 +54,58 @@ class ErrorPredictor(object):
         self.models = {stat: None for stat in stats}
         self.best_model = None
 
+    def _fit_stat_model(self, stat: str, X: NDArray, y: NDArray, groups: NDArray):
+        """
+        Fits the model for a specific statistic
+
+        Parameters
+        ----------
+        X : array like
+            Training data
+        y : array like
+            Response data
+        groups : array like
+            groups with which to split the cross validation
+
+        Returns
+        -------
+        None
+            Stores the best model in the class
+
+        """
+        self.models[stat] = self._fit_model(X, y, groups)
+
+
+
+    def _fit_model(self, X: NDArray, y: NDArray, groups: NDArray) -> RegressorMixin:
+        """
+
+        Fits the model. If no hyperparameters have been tuned, tunes hyperparameters
+
+        Parameters
+        ----------
+        X : array like
+            Training data
+        y : array like
+            Response data
+        groups : array like
+            groups with which to split the cross validation
+
+        Returns
+        -------
+        RegressorMixin
+            the fitted model
+
+        """
+        X, y = check_X_y(X, y)
+
+        if isinstance(self.best_model, type(None)):
+            return self._fit_model_hyper_params(X,y, groups)
+        else:
+            model = deepcopy(self.best_model)
+            model.fit(X, y)
+            return model
+
     def _fit_model_hyper_params(self, X: NDArray, y: NDArray, groups: NDArray):
         """
 
@@ -69,8 +123,8 @@ class ErrorPredictor(object):
 
         Returns
         -------
-        none
-            finds the best hyperparameters
+        RegressorMixin
+           Regressor with the best hyperparameters
 
         """
 
@@ -86,4 +140,5 @@ class ErrorPredictor(object):
 
         model.fit(X, y)
 
-        self.best_model = model.best_estimator_
+        self.best_model = deepcopy(model.best_estimator_)
+        return deepcopy(model.best_estimator_)
