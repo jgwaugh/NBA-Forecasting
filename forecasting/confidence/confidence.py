@@ -52,7 +52,7 @@ class ErrorPredictor(object):
         self.models = {stat: None for stat in stats}
         self.best_model = None
 
-    def _fit_stat_model(self, stat: str, X: NDArray, y: NDArray, groups: NDArray):
+    def fit_stat_model(self, stat: str, X: NDArray, y: NDArray, groups: NDArray):
         """
         Fits the model for a specific statistic
 
@@ -73,7 +73,7 @@ class ErrorPredictor(object):
         """
         self.models[stat] = self._fit_model(X, y, groups)
 
-    def _fit_model(self, X: NDArray, y: NDArray, groups: NDArray) -> RegressorMixin:
+    def _fit_model(self, X: NDArray, y: NDArray, groups: Optional[NDArray] = None) -> RegressorMixin:
         """
 
         Fits the model. If no hyperparameters have been tuned, tunes hyperparameters
@@ -164,3 +164,8 @@ class ErrorPredictor(object):
             raise ValueError(f"Model has not yet been fitted for {stat}")
 
         return np.exp(model.predict(X))
+
+    def get_model(self, stat:str):
+        """Gets the model associated with the given statistic """
+        return self.models[stat]
+
