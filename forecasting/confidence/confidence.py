@@ -1,18 +1,12 @@
-from typing import List, Dict, Optional
+from copy import deepcopy
+from typing import Dict, List, Optional
 
 import numpy as np
 from numpy.typing import NDArray
-
-
 from sklearn.base import RegressorMixin
-
-from copy import deepcopy
-
+from sklearn.model_selection import GridSearchCV, LeavePGroupsOut
 from sklearn.utils import check_X_y
 
-from sklearn.model_selection import LeavePGroupsOut
-
-from sklearn.model_selection import GridSearchCV
 
 class ErrorPredictor(object):
     """
@@ -35,11 +29,12 @@ class ErrorPredictor(object):
 
     """
 
-    def __init__(self,
-                 stats : List,
-                 base_model : RegressorMixin,
-                 param_grid : Dict[str, List],
-                 ):
+    def __init__(
+        self,
+        stats: List,
+        base_model: RegressorMixin,
+        param_grid: Dict[str, List],
+    ):
         """
 
         Parameters
@@ -54,14 +49,10 @@ class ErrorPredictor(object):
 
         self.base_model = base_model
         self.param_grid = param_grid
-        self.models = {
-            stat : None
-            for stat in stats
-        }
+        self.models = {stat: None for stat in stats}
         self.best_model = None
 
-    def _fit_model_hyper_params(self, X: NDArray, y: NDArray,
-                        groups: NDArray ):
+    def _fit_model_hyper_params(self, X: NDArray, y: NDArray, groups: NDArray):
         """
 
         Tunes the hyperparameters using cross validation
@@ -90,13 +81,9 @@ class ErrorPredictor(object):
         split = [x for x in lpgo.split(X, y, groups)]
 
         model = GridSearchCV(
-            estimator=base_model,
-            n_jobs=3,
-            cv=split,
-            param_grid=self.param_grid
+            estimator=base_model, n_jobs=3, cv=split, param_grid=self.param_grid
         )
 
         model.fit(X, y)
 
         self.best_model = model.best_estimator_
-
