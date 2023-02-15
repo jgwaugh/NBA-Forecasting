@@ -6,9 +6,9 @@ Suppose we are trying to predict $X_t | X_{t-1}$. The simplest formulation would
 
 $$ x_t = f(x_{t-1}, t) + \sigma(x_{t - 1}, t)\epsilon $$
 
-Where $ \epsilon \sim N(0, 1)$
+Where $ \epsilon \sim N(0, 1) $
 
-We can fit $ \hat{f} $ on the training set, and on the validation set, write the following
+We can fit $ \hat{f}(x_{t-1}, t) $ on the training set, and on the validation set, write the following
 
 $$  Z = log(|x_t - \hat{f}(x_{t-1}, t)|) = log(\sigma(x_{t-1}, t)) + log(\epsilon) $$
 
