@@ -31,6 +31,5 @@ A SHAP plot that increases can be read as a positive marignal effect in the mode
 To run the app, simply run `streamlit run app.py`. 
 
 Observe how SHAP values vary for both the statistic of interest and over time, generally growing over time. 
-
 This corresponds to different statistic ranges having different eases of prediction with error increasing over time.
 
