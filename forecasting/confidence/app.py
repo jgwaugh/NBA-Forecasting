@@ -1,14 +1,11 @@
-from forecasting.confidence import get_predictor_model
-
-import streamlit as st
-
 import pickle
 
-import seaborn as sns
-
 import matplotlib.pyplot as plt
-
+import seaborn as sns
 import shap
+import streamlit as st
+
+from forecasting.confidence import get_predictor_model
 
 sns.set()
 
@@ -20,7 +17,6 @@ predictor = get_predictor_model()
 
 
 stat_names = [k for k, v in stats.items()]
-
 
 
 st.write(
@@ -36,36 +32,27 @@ relationships between features and standard error sizes.
 stat = st.selectbox("Select a statistic to view marginal correlations", stat_names)
 
 X = stats[stat]
-X = X[['x', 't']]
+X = X[["x", "t"]]
 
-model= predictor.get_model(stat)
+model = predictor.get_model(stat)
 
 
 explainer = shap.TreeExplainer(model)
 shap_values = explainer(X)
 
 
-
 f1 = plt.figure()
-plt.scatter(
-    X.values[:, 1],
-    shap_values.values[:, 1]
-)
-plt.xlabel('Time')
-plt.ylabel('SHAP value for Time')
+plt.scatter(X.values[:, 1], shap_values.values[:, 1])
+plt.xlabel("Time")
+plt.ylabel("SHAP value for Time")
 
 
 f2 = plt.figure()
-plt.scatter(
-    X.values[:, 0],
-    shap_values.values[:, 0]
-)
+plt.scatter(X.values[:, 0], shap_values.values[:, 0])
 plt.xlabel(stat)
-plt.ylabel(f'SHAP value for {stat}')
-
+plt.ylabel(f"SHAP value for {stat}")
 
 
 st.pyplot(f1)
 
 st.pyplot(f2)
-
