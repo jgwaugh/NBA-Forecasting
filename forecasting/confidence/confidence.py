@@ -5,9 +5,7 @@ import numpy as np
 from numpy.typing import NDArray
 from sklearn.base import RegressorMixin
 from sklearn.model_selection import GridSearchCV, LeavePGroupsOut
-from sklearn.utils import check_X_y
-
-from sklearn.utils import check_array
+from sklearn.utils import check_array, check_X_y
 
 
 class ErrorPredictor(object):
@@ -75,8 +73,6 @@ class ErrorPredictor(object):
         """
         self.models[stat] = self._fit_model(X, y, groups)
 
-
-
     def _fit_model(self, X: NDArray, y: NDArray, groups: NDArray) -> RegressorMixin:
         """
 
@@ -100,7 +96,7 @@ class ErrorPredictor(object):
         X, y = check_X_y(X, y)
 
         if isinstance(self.best_model, type(None)):
-            return self._fit_model_hyper_params(X,y, groups)
+            return self._fit_model_hyper_params(X, y, groups)
         else:
             model = deepcopy(self.best_model)
             model.fit(X, y)
