@@ -53,6 +53,14 @@ plt.xlabel(stat)
 plt.ylabel(f"SHAP value for {stat}")
 
 
-st.pyplot(f1)
 
-st.pyplot(f2)
+col1, col2 = st.columns(2)
+
+with col1:
+    st.pyplot(f1)
+
+with col2:
+    st.pyplot(f2)
+
+
+
