@@ -41,8 +41,8 @@ conda activate nba_forecasting && streamlit run app.py
 
 The application should look something like this:
 
-![alt text](images/app_top.png)
-![alt text](images/app_bottom.png)
+![alt text](images/top_app.png)
+![alt text](images/bottom_app.png)
 
 
 ## Historical Validation
@@ -54,4 +54,4 @@ performance comparison against a baseline model, look [here](forecasting/trainin
 
 Future work here should:
 1. Better tune hyperparameters 
-3. Add non parametric confidence intervals to the predictions. 
+3. Calibrate confidence intervals

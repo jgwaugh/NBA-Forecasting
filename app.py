@@ -6,9 +6,11 @@ import joblib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import streamlit as st
 from numpy.typing import NDArray
 
+from forecasting.confidence import get_predictor_model
 from forecasting.training.model import load_model, predict_player_career
 
 
@@ -56,7 +58,7 @@ def load_current_players(current_season: int) -> List[Tuple[str, NDArray]]:
 # Load in data and model
 #
 ###########################################################################
-
+sns.set()
 
 data_directory = Path("forecasting").joinpath("munging").joinpath("data")
 
@@ -67,6 +69,8 @@ scaler = joblib.load(data_directory.joinpath("scaler"))
 _, model = load_model(None, None, retrain=False)
 
 players = load_current_players(2022)
+
+sigma_predictor = get_predictor_model()
 
 
 ###########################################################################
@@ -129,6 +133,15 @@ predicted_career_df.insert(0, "YR", years)
 predicted_career_df.insert(0, "PLAYER", [player] * len(predicted_career_df))
 
 
+original_career_length = len(player_df)
+career_ci = predicted_career_df.iloc[original_career_length - 1 : -1, :][stat].values
+times = np.arange(1, len(career_ci) + 1)
+
+sigma = sigma_predictor.predict_sigma(stat, pd.DataFrame({"x": career_ci, "t": times}))
+
+se = 1.96 * sigma
+
+
 ###########################################################################
 #
 # Plot
@@ -139,11 +152,23 @@ true_stat = player_df[stat].values
 predicted_stat = predicted_career_df[stat].values
 yrs_actual = player_df.YR.values
 
+se = np.hstack([np.zeros(original_career_length), se])
+upper = predicted_stat + se
+lower = predicted_stat - se
+lower = np.array([max(x, 0) for x in lower])  # can't have stats below 0
+
+if predicted_stat.max() < 1:
+    upper = np.array(
+        [min(x, 1) for x in upper]
+    )  # can't have percentage stats greater than 1
+
 
 fig = plt.figure()
 
 plt.plot(years, predicted_stat, color="red", label="Forecast")
 plt.plot(yrs_actual, true_stat, color="blue", label="Actual Career")
+plt.fill_between(years, lower, upper, color="blue", alpha=0.3, label="95% CI")
+
 plt.ylabel(stat)
 plt.xlabel("Year")
 plt.title(player + " Career " + stat + " and Predictions")
