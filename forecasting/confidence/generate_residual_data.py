@@ -1,25 +1,24 @@
 import pickle
 from os.path import abspath, dirname
 from pathlib import Path
+from typing import Dict, List, Tuple
 
 import joblib
 import numpy as np
 import pandas as pd
-from forecasting.training.model import load_model, predict_player_career
-from forecasting.training.train import filter_set
-
-from typing import List, Tuple, Dict
 from numpy.typing import ArrayLike
 from sklearn.base import TransformerMixin
 from tensorflow.keras import Sequential
 
+from forecasting.training.model import load_model, predict_player_career
+from forecasting.training.train import filter_set
+
 
 def build_stat_time_series(
-        stat: str,
-        player: str,
-        player_df: pd.DataFrame,
-        predicted_career_df: pd.DataFrame,
-
+    stat: str,
+    player: str,
+    player_df: pd.DataFrame,
+    predicted_career_df: pd.DataFrame,
 ) -> pd.DataFrame:
     """
     Builds out a time series for a given statistic using predicted
@@ -51,21 +50,23 @@ def build_stat_time_series(
     time_minus_one = np.arange(2, len(X_t) + 2) - 1
     residual = np.log(np.abs(X_t[stat].values - pred_t[stat].values))
 
-    return pd.DataFrame({
-        'log_residual': residual,
-        'x_t_minus_one': X_t_minus_one[stat].values,
-        't_minus_one': time_minus_one,
-        'player' : [player] * len(time_minus_one)}
+    return pd.DataFrame(
+        {
+            "log_residual": residual,
+            "x_t_minus_one": X_t_minus_one[stat].values,
+            "t_minus_one": time_minus_one,
+            "player": [player] * len(time_minus_one),
+        }
     )
 
-def build_player_time_series_dict(
-        player : str,
-        players : List,
-        df_raw : pd.DataFrame,
-        val : List[Tuple[str, ArrayLike]],
-        scaler : TransformerMixin,
-        model: Sequential
 
+def build_player_time_series_dict(
+    player: str,
+    players: List,
+    df_raw: pd.DataFrame,
+    val: List[Tuple[str, ArrayLike]],
+    scaler: TransformerMixin,
+    model: Sequential,
 ) -> Dict[str, pd.DataFrame]:
     """
     For each statistic we use to define a career, predicts the statistic using the LSTM
@@ -103,11 +104,15 @@ def build_player_time_series_dict(
         predicted_career
     )  # scale back to regular space
 
-
     player_df = df_raw[df_raw.PLAYER == player]
-    predicted_career_df = pd.DataFrame(predicted_career, columns=player_df.columns[2:-2])
+    predicted_career_df = pd.DataFrame(
+        predicted_career, columns=player_df.columns[2:-2]
+    )
 
-    return {stat : build_stat_time_series(stat, player, player_df, predicted_career_df) for stat in stats}
+    return {
+        stat: build_stat_time_series(stat, player, player_df, predicted_career_df)
+        for stat in stats
+    }
 
 
 ###########################################################################
@@ -142,20 +147,13 @@ players = [x[0] for x in val]
 stat_data = {}
 for player in players:
     player_stats = build_player_time_series_dict(
-        player,
-        players,
-        df_raw,
-        val,
-        scaler,
-        model)
+        player, players, df_raw, val, scaler, model
+    )
     for stat, data in player_stats.items():
-       if stat not in stat_data:
-           stat_data[stat] = data
-       else:
-           stat_data[stat] = pd.concat([stat_data[stat], data])
+        if stat not in stat_data:
+            stat_data[stat] = data
+        else:
+            stat_data[stat] = pd.concat([stat_data[stat], data])
 
 with open("residuals.pkl", "wb") as fp:
     pickle.dump(stat_data, fp)
-
-
-

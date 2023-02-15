@@ -7,8 +7,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import streamlit as st
+
 from forecasting.training.model import load_model, predict_player_career
 from forecasting.training.train import filter_set
+
 ###########################################################################
 #
 # Load in data and model

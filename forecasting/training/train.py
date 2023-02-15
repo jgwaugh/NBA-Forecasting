@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import List, Tuple
 
 import matplotlib.pyplot as plt
+
 from forecasting.training.model import load_model
 
 warnings.filterwarnings("ignore", message=r"Passing", category=FutureWarning)
