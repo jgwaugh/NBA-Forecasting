@@ -13,3 +13,7 @@ The `munging` folder contains code that preprocesses the data.
 Training takes place in this folder. Look here for more information on 
 model validation / performance compared to a baseline. 
 
+### confidence
+
+This folder contains information on confidence interval generation. 
+
