@@ -12,7 +12,7 @@ We can fit $\hat{f}(x_{t-1}, t)$ on the training set, and on the validation set,
 
 $$  Z = log(|x_t - \hat{f}(x_{t-1}, t)|) = log(\sigma(x_{t-1}, t)) + log(\epsilon) $$
 
-If we can train a model, $g(x_{t-1}, t)$ to predict $ Z$, then we should have
+If we can train a model, $g(x_{t-1}, t)$ to predict $Z$, then we should have
 
 $$ exp(\hat{Z}) = \hat{\sigma}(x_{t-1}, t) \approx \sigma(x_{t - 1}, t) $$
 
