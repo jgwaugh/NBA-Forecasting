@@ -16,4 +16,4 @@ If we can train a model, $g(x_{t-1}, t)$ to predict $Z$, then we should have
 
 $$ exp(\hat{Z}) = \hat{\sigma}(x_{t-1}, t) \approx \sigma(x_{t - 1}, t) $$
 
-From here, confidence intervals can be build. 
+From here, we can build confidence intervals. 
