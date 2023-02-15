@@ -53,8 +53,8 @@ def build_stat_time_series(
     return pd.DataFrame(
         {
             "log_residual": residual,
-            "x_t_minus_one": X_t_minus_one[stat].values,
-            "t_minus_one": time_minus_one,
+            "x": X_t_minus_one[stat].values,
+            "t": time_minus_one,
             "player": [player] * len(time_minus_one),
         }
     )
