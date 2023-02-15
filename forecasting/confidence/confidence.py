@@ -73,7 +73,9 @@ class ErrorPredictor(object):
         """
         self.models[stat] = self._fit_model(X, y, groups)
 
-    def _fit_model(self, X: NDArray, y: NDArray, groups: Optional[NDArray] = None) -> RegressorMixin:
+    def _fit_model(
+        self, X: NDArray, y: NDArray, groups: Optional[NDArray] = None
+    ) -> RegressorMixin:
         """
 
         Fits the model. If no hyperparameters have been tuned, tunes hyperparameters
@@ -165,7 +167,6 @@ class ErrorPredictor(object):
 
         return np.exp(model.predict(X))
 
-    def get_model(self, stat:str):
-        """Gets the model associated with the given statistic """
+    def get_model(self, stat: str):
+        """Gets the model associated with the given statistic"""
         return self.models[stat]
-
